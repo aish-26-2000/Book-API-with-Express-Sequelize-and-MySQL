@@ -8,15 +8,14 @@ const Op = db.Sequelize.Op;
 //get all books
 exports.findAll = (req, res) => {
     const title = req.query.title;
-    var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-    Book.findAll({ where: condition })
+    Book.findAll({ where: title })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving books."
         });
       });
   };
@@ -30,13 +29,13 @@ exports.findOne = (req, res) => {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Cannot find Tutorial with id=${id}.`
+            message: `Cannot find Books with id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Tutorial with id=" + id
+          message: "Error retrieving Book with id=" + id
         });
       });
  };
